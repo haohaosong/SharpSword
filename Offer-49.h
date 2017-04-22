@@ -15,7 +15,19 @@ pair<bool,long long> my_atoi(string& s)
 		return make_pair(false,0);
 
 	bool hasSimbol = true;
+
+	//跳过开始的空格和字符0
 	char fC = s[0];
+	int endIndex = 0;
+	for (int i = 0; i < s.size(); ++i)
+	{
+		fC = s[i];
+		endIndex = i;
+		if (fC != ' ' && fC != '0')
+			break;
+	}
+	
+	//判断有无符号位
 	if (fC != '+' && fC != '-')
 	{
 		//第一个字符不为正负号，也不为数字
@@ -30,9 +42,9 @@ pair<bool,long long> my_atoi(string& s)
 	int len = s.size();
 	int index = len - 1;
 	long long base = 1;
-	for (; index >= 0; index--)
+	for (; index >= endIndex; index--)
 	{
-		if (index == 0 && hasSimbol)
+		if (index == endIndex && hasSimbol)
 			break;
 
 		char tmp = s[index];
@@ -58,7 +70,7 @@ pair<bool,long long> my_atoi(string& s)
 
 	if (hasSimbol)
 	{
-		if (s[0] == '-')
+		if (fC == '-')
 			ret = (-ret);
 	}
 
@@ -94,5 +106,15 @@ void TestMyAtoi()
 	string s5("55555555555555555555555555555555555555");
 	my_atoi(s5);
 	ret = my_atoi(s5);
+	cout << "是否正常:" << ret.first << " 结果: " << ret.second << endl;
+
+	string s6("  123");
+	my_atoi(s6);
+	ret = my_atoi(s6);
+	cout << "是否正常:" << ret.first << " 结果: " << ret.second << endl;
+
+	string s7("  -123");
+	my_atoi(s7);
+	ret = my_atoi(s7);
 	cout << "是否正常:" << ret.first << " 结果: " << ret.second << endl;
 }
