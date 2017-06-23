@@ -93,6 +93,9 @@ bool DoesTree1HasTree2(const TreeNode* srcT, const TreeNode* subT)
 	if (srcT == NULL)
 		return false;
 
+	if(srcT->_data != subT->_data)
+		return false;
+	
 	bool retLeft = DoesTree1HasTree2(srcT->_left, subT->_left);
 	bool retRight = DoesTree1HasTree2(srcT->_right, subT->_right);
 
